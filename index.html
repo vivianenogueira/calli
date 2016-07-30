@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <title>Vivi Dashboard</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.brown-orange.min.css" />
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-blue.min.css" />
     <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
     <script>
         window.onload = function() {
-            var a = document.querySelectorAll("a.d-layout__tab");
-            Array.prototype.map.call(a, function(x){
+            Array.prototype.map.call(document.querySelectorAll("a.d-layout__tab"), function(x){
                 x.onclick = function() {
-                    var t = document.querySelectorAll(".mdl-layout__tab-panel");
-                    Array.prototype.map.call(t, function(y){
+                    Array.prototype.map.call(document.querySelectorAll(".mdl-layout__tab-panel"), function(y){
                         y.classList.remove("is-active");
                     })
                     document.getElementById(x.href.split("#")[1]).classList.add("is-active");
@@ -24,6 +22,7 @@
         .mdl-layout__drawer {
             z-index: 2;
             background: #fff;
+            width: 200px;
         }
         .mdl-navigation {
             margin-top: 64px;
@@ -38,6 +37,9 @@
         .mdl-layout__content {
             background: #ddd;
         }
+        .mdl-layout--fixed-drawer>.mdl-layout__content {
+            margin-left: 200px;
+        }
         .demo-cards.f {
             display: -webkit-flex;
             display: flex;
@@ -48,14 +50,18 @@
             height: 16px;
         }
         .mdl-navigation__link>.material-icons {
-            margin-right: 32px;
+            margin-right: 16px;
         }
         .mdl-navigation__link {
             font-weight: 600;
         }
+        .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
+            padding: 16px 20px;
+        }
         .mdl-mini-footer {
-            margin-left: 240px;
-   	        width: calc(100% - 240px);
+            margin-left: 200px;
+   	        width: calc(100% - 200px);
+            padding: 0px;
             -webkit-justify-content: center;
             -ms-flex-pack: center;
             justify-content: center;
@@ -92,6 +98,23 @@
             align-content: center;
             flex-direction: column-reverse;
             align-items: center;
+        }
+        .body-view img {
+            max-height: 150px;
+        }
+        @media screen and (min-width: 1025px) {
+            .mdl-layout--fixed-drawer>.mdl-layout__header .mdl-layout__header-row {
+                padding-left: 20px;
+            }
+        }
+        @media screen and (max-width: 1024px) {
+            .mdl-layout--fixed-drawer>.mdl-layout__content {
+                margin-left: 0;
+            }
+            .mdl-mini-footer {
+                margin-left: 0px;
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -218,50 +241,8 @@
 
     <div class="mdl-layout__tab-panel" id="expression">
         <div class="mdl-grid">            
-          <div class="search mdl-card mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-            <div class="mdl-cell mdl-cell--5-col">
-                <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <h5>Gene query</h5>
-                <form action="#">
-                <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="sample1">
-                    <label class="mdl-textfield__label" for="sample1">Type here...</label>
-                </div>
-                </form>
-                </div>
-            </div>
-            <div class="mdl-cell mdl-cell--4-col">
-                <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <h5>Tissue</h5>
-                <form action="#">
-                <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="sample1">
-                    <label class="mdl-textfield__label" for="sample1">Type here...</label>
-                </div>
-                </form>
-                </div>
-            </div>
-            <div class="mdl-cell mdl-cell--3-col">
-                <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <h5>Expression cutoff</h5>
-                <form action="#">
-                <div class="mdl-textfield mdl-js-textfield">
-                    <input class="mdl-textfield__input" type="text" id="sample1">
-                    <label class="mdl-textfield__label" for="sample1">Type here...</label>
-                </div>
-                </form>
-                </div>
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-                <button class="mdl-button mdl-js-button mdl-button--primary">
-                    Reset
-                </button>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-                    Apply
-                </button>    
-            </div>
-          </div>
-          <div class="demo-cards f mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+
+          <div class="demo-cards f mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--3-col-desktop mdl-grid mdl-grid--no-spacing">
             <div class="body-view mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
                 <div class="mdl-card__title mdl-card--expand mdl-grid">
                 <div>
@@ -287,8 +268,45 @@
                 </div>
                 </div>
             </div>
+
+            <div class="demo-separator mdl-cell--1-col"></div>
+
+            <div class="search mdl-card mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+                <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                <form action="#">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="sample1">
+                    <label class="mdl-textfield__label" for="sample1">Gene query</label>
+                </div>
+                </form>
+                </div>
+                <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                <form action="#">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="sample1">
+                    <label class="mdl-textfield__label" for="sample1">Tissue</label>
+                </div>
+                </form>
+                </div>
+                <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                <form action="#">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="sample1">
+                    <label class="mdl-textfield__label" for="sample1">Expression cutoff</label>
+                </div>
+                </form>
+                </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <button class="mdl-button mdl-js-button mdl-button--primary">
+                    Reset
+                </button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                    Apply
+                </button>    
+            </div>
           </div>
-          <div class="clustergrammer mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+          </div>
+          <div class="clustergrammer mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--9-col">
             <div class="mdl-card__title mdl-card--expand mdl-grid">
             <div style="width: 100%;">
                 <img src="images/clustergrammer.png" width="100%" height="100%"></img>
